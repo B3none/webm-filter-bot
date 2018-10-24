@@ -1,3 +1,11 @@
 {
-  "token": "NTAwODMyMjQyNTkyMTIwODMy.DqQkJA.JWRfeucE-B0JX01ltPN3tLKj36I"
+  "b3token": "NTAwODMyMjQyNTkyMTIwODMy.DqQkJA.JWRfeucE-B0JX01ltPN3tLKj36I",
+  "token": "NTA0ODAyOTc1MjAyNjcyNjYw.DrKWFA.ONPvc7tQ7rPRNr3gWK5K1exkYzE",
+  "nsfw-channel": "408969739268784128",
+  "nsfw-phrases": [
+    ".mp4",
+    ".webm",
+    "4cdn.org",
+    "boards.4chan.org"
+  ]
 }

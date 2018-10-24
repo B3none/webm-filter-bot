@@ -1,29 +1,36 @@
-let nsfwPhrases = [
-    '.mp4',
-    '.webm',
-    'boards.4chan.org',
-];
+const config = require("../../config/config.json");
 
 module.exports = {
     message: (client, message) => {
-        if (message.author.bot) {
+        if (message.author.bot || message.channel.nsfw) {
             return;
         }
 
-        nsfwPhrases.forEach(phrase => {
-            if (message.content.includes(phrase)) {
+        let validated = false;
+        config["nsfw-phrases"].forEach(phrase => {
+            if (message.content.includes(phrase) && (message.content.includes('https://') || message.content.includes('http://')) && !validated) {
                 message.delete().catch(o_o => {});
 
-                return message.author.send({
+                let nsfwChannel = message.guild.channels.get(config['nsfw-channel']);
+
+                if (nsfwChannel) {
+                    nsfwChannel.send({
+                        file: message.content
+                    });
+                }
+
+                message.author.send({
                     embed: {
                         author: {
                             name: client.user.username,
                             icon_url: client.user.avatarURL
                         },
                         color: 0xff8c00,
-                        description: `Fuck off sending that shit to anything other than #NSFW, faggot.`
+                        description: `Fuck off sending that shit to anything other than <#${config['nsfw-channel']}>, faggot.`
                     }
                 });
+
+                validated = true;
             }
         });
     }
