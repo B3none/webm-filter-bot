@@ -6,32 +6,44 @@ module.exports = {
             return;
         }
 
-        let validated = false;
+        console.log(message.attachments);
+        console.log(message.content);
+
+        let isNSFW = message.attachments.size && message.attachments.first().filename.includes('.webm');
+        let attachmentUrl = isNSFW ? message.attachments.first().proxyURL : message.content;
+
         config["nsfw-phrases"].forEach(phrase => {
-            if (message.content.includes(phrase) && (message.content.includes('https://') || message.content.includes('http://')) && !validated) {
-                message.delete().catch(o_o => {});
-
-                let nsfwChannel = message.guild.channels.get(config['nsfw-channel']);
-
-                if (nsfwChannel) {
-                    nsfwChannel.send({
-                        file: message.content
-                    });
-                }
-
-                message.author.send({
-                    embed: {
-                        author: {
-                            name: client.user.username,
-                            icon_url: client.user.avatarURL
-                        },
-                        color: 0xff8c00,
-                        description: `Fuck off sending that shit to anything other than <#${config['nsfw-channel']}>, faggot.`
-                    }
-                });
-
-                validated = true;
+            if (!isNSFW && message.content.includes(phrase) && (message.content.includes('https://') || message.content.includes('http://'))) {
+                isNSFW = true;
             }
         });
+
+
+        console.log('NSFDubz? ', isNSFW);
+        if (isNSFW) {
+            message.delete().catch(o_o => {});
+
+            let nsfwChannel = message.guild.channels.get(config['nsfw-channel']);
+
+            console.log(nsfwChannel);
+            console.log(attachmentUrl);
+
+            if (nsfwChannel) {
+                nsfwChannel.send({
+                    file: attachmentUrl
+                }).catch(o_O => {});
+            }
+
+            message.author.send({
+                embed: {
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    color: 0xff8c00,
+                    description: `Fuck off sending that shit to anything other than <#${config['nsfw-channel']}>, faggot.`
+                }
+            });
+        }
     }
 };
