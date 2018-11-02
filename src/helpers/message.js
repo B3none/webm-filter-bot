@@ -41,7 +41,7 @@ module.exports = {
                         icon_url: client.user.avatarURL
                     },
                     color: 0xff8c00,
-                    description: `Fuck off sending that shit to anything other than <#${config['nsfw-channel']}>, faggot.`
+                    description: `Please remember to send your webm's or 4chan links to <#${config['nsfw-channel']}>.`
                 }
             });
         }
