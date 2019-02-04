@@ -23,9 +23,6 @@ module.exports = {
 
             let nsfwChannel = message.guild.channels.get(config['nsfw-channel']);
 
-            console.log(nsfwChannel);
-            console.log(attachmentUrl);
-
             if (nsfwChannel) {
                 nsfwChannel.send({
                     file: attachmentUrl
