@@ -18,8 +18,6 @@ module.exports = {
             }
         });
 
-
-        console.log('NSFDubz? ', isNSFW);
         if (isNSFW) {
             message.delete().catch(o_o => {});
 
